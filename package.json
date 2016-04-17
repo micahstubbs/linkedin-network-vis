@@ -1,0 +1,30 @@
+{
+  "name": "linkedin-network-vis",
+  "version": "1.0.0",
+  "description": "a network visualization for LinkedIn connections",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micahstubbs/linkedin-network-vis.git"
+  },
+  "keywords": [
+    "network",
+    "visualization",
+    "social",
+    "graph"
+  ],
+  "author": "@micahstubbs <micahstubbs@gmail.com> (https://github.com/micahstubbs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/micahstubbs/linkedin-network-vis/issues"
+  },
+  "homepage": "https://github.com/micahstubbs/linkedin-network-vis#readme",
+  "dependencies": {
+    "d3": "^3.5.16",
+    "jsonfile": "^2.3.0",
+    "lodash": "^4.11.1"
+  }
+}
