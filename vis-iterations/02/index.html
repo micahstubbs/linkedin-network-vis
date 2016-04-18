@@ -7,8 +7,8 @@
 </head>
 <style>
   svg {
-    height: 500px;
-    width: 500px;
+    height: 8000px;
+    width: 8000px;
     border: 1px solid gray;
   }
 </style>
@@ -30,7 +30,7 @@ function onlyUnique(value, index, self) {
 
 function createNetwork(graph) {
   var nodeHash = {};
-  var nodes = graph.nodes;
+  var nodes = [];
   var edges = [];
 
   // start calling links edges
@@ -237,9 +237,12 @@ function createForceNetwork(nodes, edges) {
   var force = d3.layout.force()
     .nodes(nodes)
     .links(edges)
-    .size([500,500])
+    .size([8000,8000])
     .charge(-300)
-    .gravity(10)
+    .chargeDistance(4000)
+    .linkStrength(0.1)
+    .linkDistance(20)
+    .gravity(0.01)
     .on("tick", updateNetwork);
 
   var edgeEnter = d3.select("svg.main").selectAll("g.edge")
@@ -250,11 +253,12 @@ function createForceNetwork(nodes, edges) {
 
   edgeEnter
     .append("line")
-    .style("stroke-width", function (d) {
-      return d.border ? "3px" : "1px"
-    })
+    .style('stroke-width', 1)
+    //.style("stroke-width", function (d) {
+    //  return d.border ? "3px" : "1px"
+    //})
     .style("stroke", "black")
-    .style('stroke-opacity', 0.1)
+    .style('stroke-opacity', 0.05)
     .style("pointer-events", "none");
 
   var nodeEnter = d3.select("svg.main").selectAll("g.node")
@@ -265,43 +269,50 @@ function createForceNetwork(nodes, edges) {
     .call(force.drag());
 
   nodeEnter.append("circle")
-    .attr("r", 8)
+    .attr("r", 3)
     .style("fill", function (d) { return colors(d.module) })
-    .style("stroke", "black")
+    .style("stroke", "none")
     .style("stroke-width", function (d) {
       return d.border ? "3px" : "1px"
     })
-
+  
   nodeEnter.append("text")
     .style("text-anchor", "middle")
     .attr("y", 3)
     .style("stroke-width", "1px")
     .style("stroke-opacity", 0.75)
-    .style("stroke", "white")
+    .style("stroke", "black")
     .style("font-size", "8px")
-    .text(function (d) { return d.id })
+    .text(function (d) { return d.label })
     .style("pointer-events", "none")
-
+  /*
   nodeEnter.append("text")
     .style("text-anchor", "middle")
     .attr("y", 3)
     .style("font-size", "8px")
     .text(function (d) { return d.id })
     .style("pointer-events", "none")
+  */
+  /*
+  // draw the network at each tick
+  force.on("tick", updateNetwork);
 
-    force.start();
+  force.start();
 
-    for(var i = 0; i < 20; i++){
-      force.tick();
-    }
+  for(var i = 0; i < 20; i++){
+    force.tick();
+  }
 
-    // draw the network at each tick
-    //force.on("tick", updateNetwork);
+  // after some iterations, we say the network 
+  // has stabilized and we stop the 
+  // force layout physics simulation
+  force.stop();
 
-    // after some iterations, we say the network 
-    // has stabilized and we stop the 
-    // force layout physics simulation
-    force.stop();
+  // now we draw the network
+  // updateNetwork();
+  */
+
+  force.start();
 
   function moduleOver(d) {
     console.log("MODULE", d);
