@@ -239,7 +239,7 @@ function createForceNetwork(nodes, edges) {
     .links(edges)
     .size([500,500])
     .charge(-300)
-    .gravity(1)
+    .gravity(10)
     .on("tick", updateNetwork);
 
   var edgeEnter = d3.select("svg.main").selectAll("g.edge")
@@ -289,7 +289,19 @@ function createForceNetwork(nodes, edges) {
     .text(function (d) { return d.id })
     .style("pointer-events", "none")
 
-  force.start();
+    force.start();
+
+    for(var i = 0; i < 20; i++){
+      force.tick();
+    }
+
+    // draw the network at each tick
+    //force.on("tick", updateNetwork);
+
+    // after some iterations, we say the network 
+    // has stabilized and we stop the 
+    // force layout physics simulation
+    force.stop();
 
   function moduleOver(d) {
     console.log("MODULE", d);
